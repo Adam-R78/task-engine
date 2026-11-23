@@ -6,13 +6,37 @@
   <title>Task Engine</title>
   <style>
     html, body, iframe { margin: 0; padding: 0; width: 100%; height: 100%; border: none; background: #0f172a; overflow: hidden; }
+    #micUnlockBtn {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: #0284c7; color: #fff; border: none; border-radius: 999px;
+      padding: 12px 20px; font: 600 15px/1 -apple-system, sans-serif;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45); cursor: pointer; z-index: 9999;
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <button id="micUnlockBtn" onclick="unlockMic()">🎙️ Enable Mic Access</button>
   <iframe id="appFrame" allow="microphone"></iframe>
   <script>
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbxEn36zlnnkhN9ACBmQsOl3JM6s1zhY40rPKi8DYfywMBOCbku0AJpnSpQ7icZYOv2X/exec";
+    const BASE_URL = "YOUR_EXEC_URL";
     document.getElementById("appFrame").src = BASE_URL + window.location.search;
+
+    const btn = document.getElementById("micUnlockBtn");
+    if (!localStorage.getItem("mic_unlocked")) {
+      btn.style.display = "block";
+    }
+
+    async function unlockMic() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(t => t.stop());
+        localStorage.setItem("mic_unlocked", "1");
+        btn.style.display = "none";
+      } catch (e) {
+        alert("Please allow microphone access in your browser's site settings: " + e.message);
+      }
+    }
   </script>
 </body>
-</html> 
+</html>
