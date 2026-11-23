@@ -19,7 +19,7 @@
   <button id="micUnlockBtn" onclick="unlockMic()">🎙️ Enable Mic Access</button>
   <iframe id="appFrame" allow="microphone"></iframe>
   <script>
-    const BASE_URL = "YOUR_EXEC_URL";
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbxEn36zlnnkhN9ACBmQsOl3JM6s1zhY40rPKi8DYfywMBOCbku0AJpnSpQ7icZYOv2X/exec";
     document.getElementById("appFrame").src = BASE_URL + window.location.search;
 
     const btn = document.getElementById("micUnlockBtn");
